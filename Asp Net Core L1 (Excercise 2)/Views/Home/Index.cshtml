@@ -1,0 +1,117 @@
+﻿@model IEnumerable<ProductResponse>
+@{
+    ViewBag.Title = "Product List";
+}
+<style>
+    .img {
+        float: left;
+        width: 100px;
+        height: 100px;
+        background-size: cover;
+    }
+</style>
+<div class="w-100">
+    <form asp-action="Index" asp-controller="Home" method="get" >
+    <div class="container" style="background-color:lightgreen; font-size:medium">
+        <div class="flex" >
+            <div class="flex-1">
+                <div class="box">
+                <p style="text-align:left; font-family:Calibri; color:white">Category</p>
+                        @{
+                            String[] categoryList = (string[]) Enum.GetNames(typeof(CategoryOptions));
+                        }
+                <select class="form-input w-25" name="Category">
+                    <option value=""> All </option>
+                            @foreach(string category in categoryList)
+                            {
+                                if (ViewBag.CurrentCategory ==category)
+                                {
+                                    <option value="@ViewBag.CurrentCategory" selected="selected">@ViewBag.CurrentCategory</option>
+                                  
+                                }
+                              else{
+
+                                    <option value="@category">@category</option>
+                              }
+                               
+                            
+                            }
+                        </select>
+                </div>
+            </div>
+            <div class="flex-1">
+                <div class="box">
+                <p style="text-align:left; font-family:Calibri; color:white">Brand</p>
+                        @{
+                            string[] BrandList= (string[])Enum.GetNames(typeof(BrandOptions));
+                        }
+                <select class="form-input w-25" name="Brand">
+                    <option value=""> All </option>
+                            @foreach(string Brand in BrandList)
+                            {
+                                if (ViewBag.CurrentBrand == Brand)
+                                {
+                                    <option value="@ViewBag.CurrentBrand" selected="selected">@ViewBag.CurrentBrand</option>
+                                   
+                                }
+                               else{
+                                
+                                    <option value="@Brand">@Brand</option>
+                               }
+                                    
+                                
+                                
+                            }
+
+                </select>
+                </div>
+                
+            </div>
+            <div class="flex-1">
+                <div class="box" style="border: 2px solid lightgreen;">
+                <p style="text-align:left; font-family:Calibri; color:white" hidden> search</p>
+                <button type="submit" class="button button-green-back">
+                    <i class="fa-solid fa-greater-than"></i>
+                </button>
+                </div>
+                
+            </div>
+            <div class="flex-1">
+
+            </div>
+            
+        </div>
+    </div>
+    </form>
+    <div class="container text-center">
+        <span>Showing @ViewBag.SortedListCount of @ViewBag.ProductListCount products - page 1-2  </span><br />
+        <a asp-action="Index" asp-controller="Home">Next</a>
+    </div>
+    <div class="container">
+        <table class="table">
+           
+            <tbody>
+                <tr>
+                    @foreach (var list in Model)
+                    {
+                  
+                        <td class="text-center pt">
+                            <img src="~/Products/@list.ImageFileName" width="200" /><br /><br />
+                            <button class="button button-green-back">[ Add To Cart ]</button><br />
+                            <span class="text-red">@list.ProductName</span><br />
+                            <span class="text-red">Rs. @list.Price</span><br />
+                        </td>
+             
+                       
+                   
+                    }
+                </tr>
+                
+               
+            </tbody>
+        </table>
+    </div>
+
+   
+
+</div> 
